@@ -1,0 +1,11 @@
+#!/usr/bin/env bash
+
+APP="todonime" # name of your release
+
+BUILD_HOST="localhost" # host where to build the release
+BUILD_USER="build" # local user at build host
+BUILD_AT="/tmp/erlang/todonime/builds" # build directory on build host
+
+STAGING_HOSTS="todonime.beta.grutenko.ru" # deploy / production hosts separated by space
+STATING_USER="ubuntu" # local user at deploy hosts
+DELIVER_TO="/opt/todonime" # deploy directory on production hosts
