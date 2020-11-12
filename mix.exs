@@ -14,12 +14,10 @@ defmodule Todonime.MixProject do
   # Run "mix help compile.app" to learn about applications.
   def application do
     [
-      applications: [
-        :plug,
-        :cowboy,
-        :edeliver
+      extra_applications: [
+        :logger,
+        :plug_cowboy
       ],
-      extra_applications: [:logger],
       mod: {Todonime.Application, []}
     ]
   end
@@ -30,7 +28,7 @@ defmodule Todonime.MixProject do
       {:storage, path: "local_deps/storage"},
       {:jason, "~> 1.2"},
       {:sqlitex, "~> 1.7"},
-      {:plug_cowboy, "~> 2.0"},
+      {:plug_cowboy, "~> 2.4"},
       {:guardian, "~> 2.1"},
       {:distillery, "~> 2.1"},
       {:edeliver, "~> 1.8"}
