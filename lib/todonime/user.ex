@@ -16,9 +16,6 @@ defmodule Todonime.User do
 
   alias Todonime.Exception.SqlException
 
-  def store_avatar(%__MODULE__{id: id}, source), do: 
-    Storage.put(source, ["user", id], filename: "avatar")
-
   def avatar_url(%__MODULE__{id: id}) do
     root = Application.fetch_env!(:todonime, :public)
     Storage.url("#{root}/user/#{id}/avatar")

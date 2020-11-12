@@ -7,16 +7,24 @@ defmodule Todonime.Application do
 
   def start(_type, _args) do
     db_path = Application.fetch_env!(:todonime, :database)
+    port = Application.get_env(:todonime, :port, 9001)
+
     db_child_spec = %{
       id: Sqlitex.Server,
       start: {Sqlitex.Server, :start_link, [db_path, [name: :db]]}
     }
-    port = Application.get_env(:todonime, :port, 9001)
+    plug = {
+      Plug.Cowboy,
+      scheme: :http,
+      plug: Todonime.Router,
+      options: [port: port]
+    }
 
     childs = [
       db_child_spec,
-      {Plug.Cowboy, scheme: :http, plug: Todonime.Router, options: [port: port]}
+      plug
     ]
+
     opts = [
       strategy: :one_for_one,
       name: Todonime.Supervisor

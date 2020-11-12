@@ -11,7 +11,7 @@ defmodule Todonime.Controller.Auth do
           {:ok, user} -> user
           :invalid -> raise ClientException, message: "Invalid login or password."
         end
-      {:ok, token, full_claims} =  Todonime.Guardian.encode_and_sign(user)
+      {:ok, token, _full_claims} =  Todonime.Guardian.encode_and_sign(user)
 
       %{
         token: token,

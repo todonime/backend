@@ -1,7 +1,10 @@
 defmodule Todonime.Controller.Watch do
   alias Todonime.Mapper
   alias Todonime.Exception.SqlException
-  alias Todonime.{User, Video, Rate, Anime, Episode}
+  alias Todonime.{
+    Video,
+    Episode
+  }
   import Plug.Conn, only: [send_resp: 3]
   
   def get(conn, video_id) do

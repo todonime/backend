@@ -18,17 +18,13 @@ defmodule Todonime.Anime do
     genres: [],
     watched: false,
   ]
- 
-  def store_poster(%__MODULE__{id: id}, source) do
-    Storage.put(source, ["anime", id, "poster"], filename: "original")
-  end
 
   def poster_url(%__MODULE__{id: id}) do
     root = Application.fetch_env!(:todonime, :public)
     Storage.url("#{root}/anime/#{id}/poster/original")
   end
 
-  def apply_rate(%__MODULE__{id: id} = anime, %Todonime.Rate{anime_id: anime_id, type: type} = rate) do
+  def apply_rate(%__MODULE__{id: id} = anime, %Todonime.Rate{anime_id: anime_id, type: type}) do
     if id != anime_id do
       raise ArgumentError, message: "This rate for other anime."
     end

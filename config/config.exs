@@ -9,7 +9,8 @@ config :todonime, Todonime.Guardian,
 config :todonime,
   storage: storage,
   public: "#{storage}/public",
-  database: "#{storage}/databases/todonime.sqlite3"
+  database: "#{storage}/databases/todonime.sqlite3",
+  port: 80
 
 config :storage,
   adapter: Storage.Adapters.Local

@@ -2,7 +2,6 @@ defmodule Todonime.Mapper.Rate do
   use Todonime.Mapper, table: "rates", struct: Todonime.Rate
 
   alias Todonime.Exception.SqlException
-  alias Todonime.Exception.NotFound
 
   def get_for_user(id) do
     case Sqlitex.Server.query(:db, "SELECT * FROM rates WHERE user_id = #{id}", into: %{}) do
