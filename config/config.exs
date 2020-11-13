@@ -1,6 +1,10 @@
 use Mix.Config
 
-storage = Path.absname("storage")
+storage =
+  case System.get_env("STORAGE_PATH") do
+    path when is_binary(path) -> path
+    nil -> Path.absname("storage")
+  end
 
 config :todonime, Todonime.Guardian,
   issuer: "todonime",
