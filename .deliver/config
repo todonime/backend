@@ -8,4 +8,4 @@ BUILD_AT="/tmp/erlang/todonime/builds" # build directory on build host
 
 STAGING_HOSTS="todonime.beta.grutenko.ru" # deploy / production hosts separated by space
 STAGING_USER="ubuntu" # local user at deploy hosts
-DELIVER_TO="/srv/erl" # deploy directory on production hosts
+DELIVER_TO="/opt" # deploy directory on production hosts
