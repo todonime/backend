@@ -7,7 +7,10 @@ defmodule Todonime.Application do
 
   def start(_type, _args) do
     db_path = Application.fetch_env!(:todonime, :database)
-    port = Application.get_env(:todonime, :port, 9001)
+    port = case Application.get_env(:todonime, :port) do
+      port when is_binary(port) -> String.to_integer(port)
+      nil -> 9001
+    end
 
     db_child_spec = %{
       id: Sqlitex.Server,

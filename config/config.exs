@@ -10,7 +10,7 @@ config :todonime,
   storage: storage,
   public: "#{storage}/public",
   database: "#{storage}/databases/todonime.sqlite3",
-  port: 80
+  port: System.get_env("PORT")
 
 config :storage,
   adapter: Storage.Adapters.Local
