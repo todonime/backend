@@ -7,7 +7,7 @@ defmodule Todonime.Application do
 
   def start(_type, _args) do
     db_path = Application.fetch_env!(:todonime, :database)
-    port = case Application.get_env(:todonime, :port) do
+    port = case System.get_env("PORT") do
       port when is_binary(port) -> String.to_integer(port)
       nil -> 9001
     end
