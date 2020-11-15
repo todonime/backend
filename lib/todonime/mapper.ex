@@ -18,7 +18,7 @@ defmodule Todonime.Mapper do
       def get!(id) do
         case get(id) do
           {:ok, result} -> result
-          {:error, :not_found} -> raise NotFound, message: "user ##{id} not found."
+          {:error, :not_found} -> raise NotFound, message: "Entry ##{id} not found."
           {:error, {_, message}} -> raise SqlException, message: "SQLException: #{message}."
         end
       end
@@ -65,6 +65,13 @@ defmodule Todonime.Mapper do
               error -> error
             end
           error -> error
+        end
+      end
+
+      def create!(fields) do
+        case create(fields) do
+          {:ok, entry} -> entry
+          {:error, {_, message}} -> raise Todonime.Exception.SqlException, message: "SQLException: #{message}"
         end
       end
 

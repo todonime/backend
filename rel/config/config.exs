@@ -14,6 +14,6 @@ config :todonime,
 config :storage, Storage.Adapters.Local,
   root: "#{storage}/public",
   host: [
-    url: "https://s.todonime.ru",
+    url: "https://s.todonime.beta.grutenko.ru",
     from: ""
   ]
