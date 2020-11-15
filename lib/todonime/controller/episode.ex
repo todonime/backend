@@ -9,16 +9,24 @@ defmodule Todonime.Controller.Episode do
     end
     rate = Todonime.User.rate_for!(user, anime)
 
+    timestamp = DateTime.utc_now
+      |> DateTime.to_unix
+
     if rate == nil do
       Todonime.Mapper.Rate.create!(%{
         anime_id: anime.id,
         user_id: user.id,
         episodes: episode.number,
-        type: "watching"
+        type: "watching",
+        updated_at: timestamp,
+        created_at: timestamp
       })
     else
-      Todonime.Mapper.Rate.update_by_id!(rate.id, %{episodes: episode.number})
-      %{rate | episodes: episode.number}
+      Todonime.Mapper.Rate.update_by_id!(rate.id, %{
+        episodes: episode.number,
+        updated_at: timestamp
+      })
+      %{rate | episodes: episode.number, updated_at: timestamp}
     end
     |> Jason.encode!
     |> (&Plug.Conn.send_resp(conn, 200, &1)).()
