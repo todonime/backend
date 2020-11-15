@@ -1,4 +1,16 @@
 defmodule Todonime.Controller.User do
+  def current(conn) do
+    user = Guardian.Plug.current_resource(conn)
+    if user == nil do
+      raise Todonime.Exception.NotAuthorized, message: "User not auth."
+    end
+
+    user
+    |> Todonime.User.with_settings!
+    |> Jason.encode!
+    |> (&Plug.Conn.send_resp(conn, 200, &1)).()
+  end
+
   def get_animes_in_list(conn, user_id) do
     params = conn
     |> Plug.Conn.fetch_query_params

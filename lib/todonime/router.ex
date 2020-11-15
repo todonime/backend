@@ -14,6 +14,7 @@ defmodule Todonime.Router do
   get "/animes/:anime_id/episodes/:number", do: Controller.Episode.get_for_anime_by_number(conn, anime_id, number)
   get "/animes/:anime_id", do: Controller.Anime.get(conn, anime_id)
   
+  get "/users/current", do: Controller.User.current(conn)
   get "/users/:user_id", do: Controller.User.get(conn, user_id)
   get "/users/:user_id/rates", do: Controller.User.get_animes_in_list(conn, user_id)
 
