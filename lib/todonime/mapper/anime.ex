@@ -29,6 +29,7 @@ defmodule Todonime.Mapper.Anime do
       FROM rates
       JOIN animes ON animes.id = rates.anime_id
       WHERE rates.user_id = #{user_id}
+      ORDER BY updated_at DESC
       #{limit}",
       into: %{}
     ) do
