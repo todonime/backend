@@ -4,7 +4,7 @@ defmodule Todonime.MixProject do
   def project do
     [
       app: :todonime,
-      version: "0.2.1",
+      version: "0.2.2",
       elixir: "~> 1.7",
       start_permanent: Mix.env() == :prod,
       deps: deps()
@@ -16,7 +16,8 @@ defmodule Todonime.MixProject do
     [
       extra_applications: [
         :logger,
-        :plug_cowboy
+        :plug_cowboy,
+        :timex
       ],
       mod: {Todonime.Application, []}
     ]
@@ -31,7 +32,9 @@ defmodule Todonime.MixProject do
       {:plug_cowboy, "~> 2.4"},
       {:guardian, "~> 2.1"},
       {:distillery, "~> 2.1"},
-      {:edeliver, "~> 1.8"}
+      {:edeliver, "~> 1.8"},
+      {:johanna, "~> 0.2.1"},
+      {:timex, "~> 3.5"}
     ]
   end
 end

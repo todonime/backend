@@ -12,26 +12,33 @@ defmodule Todonime.Application do
       nil -> 9001
     end
 
-    db_child_spec = %{
-      id: Sqlitex.Server,
-      start: {Sqlitex.Server, :start_link, [db_path, [name: :db]]}
-    }
-    plug = {
-      Plug.Cowboy,
-      scheme: :http,
-      plug: Todonime.Router,
-      options: [port: port]
-    }
-
     childs = [
-      db_child_spec,
-      plug
+      %{
+        id: Sqlitex.Server,
+        start: {Sqlitex.Server, :start_link, [db_path, [name: :db]]}
+      },
+      {
+        Plug.Cowboy,
+        scheme: :http,
+        plug: Todonime.Router,
+        options: [port: port]
+      }
     ]
 
     opts = [
       strategy: :one_for_one,
       name: Todonime.Supervisor
     ]
-    Supervisor.start_link(childs, opts)
+
+    case Supervisor.start_link(childs, opts) do
+      {:ok, pid} ->
+        add_erlcron_jobs()
+        {:ok, pid}
+      err -> err
+    end
+  end
+
+  defp add_erlcron_jobs do
+    Johanna.at({0, :am}, {Todonime.Task.Backup, :run, []})
   end
 end
