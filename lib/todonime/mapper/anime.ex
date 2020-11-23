@@ -1,6 +1,41 @@
 defmodule Todonime.Mapper.Anime do
   use Todonime.Mapper, table: "animes"
 
+  def list(opts \\ [page: 1, size: 1]) do
+    size = case Keyword.get(opts, :size) do
+      size when is_binary(size) -> String.to_integer(size)
+      size when is_integer(size) -> size
+    end
+    page = case Keyword.get(opts, :page) do
+      page when is_binary(page) -> String.to_integer(page)
+      page when is_integer(page) -> page
+    end
+
+    limit = if size != nil do
+      "LIMIT #{size} OFFSET #{size * (page - 1)}"
+    else
+      ""
+    end
+
+    case Sqlitex.Server.query(:db, "SELECT * FROM animes #{limit}") do
+      {:ok, animes} -> 
+        animes = Enum.map(animes, fn anime ->
+          anime
+          |> prepare
+          |> Todonime.Anime.with_genres!
+        end)
+        {:ok, animes}
+      {:error, details} -> {:error, details}
+    end
+  end
+
+  def list!(opts \\ [page: 1, size: nil]) do
+    case list(opts) do
+      {:ok, animes} -> animes
+      {:error, {_, message}} -> raise Todonime.Exception.SqlException, message: "SQLException: #{message}"
+    end
+  end
+
   def get_for_user(user_id, opts \\ [page: 1, size: nil]) do
     size = case Keyword.get(opts, :size) do
       size when is_binary(size) -> String.to_integer(size)
