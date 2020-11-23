@@ -34,7 +34,8 @@ defmodule Todonime.MixProject do
       {:distillery, "~> 2.1"},
       {:edeliver, "~> 1.8"},
       {:johanna, "~> 0.2.1"},
-      {:timex, "~> 3.5"}
+      {:timex, "~> 3.5"},
+      {:httpoison, "~> 1.7"}
     ]
   end
 end

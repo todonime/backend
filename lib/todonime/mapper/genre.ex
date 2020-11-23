@@ -20,4 +20,15 @@ defmodule Todonime.Mapper.Genre do
       {:error, {_, message}} -> raise SqlException, message: "SQLException: #{message}"
     end
   end
+
+  def link_with_anime(anime_id, genre_id) do
+    case Sqlitex.Server.query(:db, 
+      "INSERT INTO anime_genres(anime_id, genre_id) 
+      VALUES(?,?)",
+      bind: [anime_id, genre_id]
+    ) do
+      {:ok, _} -> :ok
+      {:error, details} -> {:error, details}
+    end
+  end
 end

@@ -40,5 +40,7 @@ defmodule Todonime.Application do
 
   defp add_erlcron_jobs do
     Johanna.at({0, :am}, {Todonime.Task.Backup, :run, []})
+    Johanna.at({2, :am}, {Todonime.Task.Anime.StatusSync, :run, []})
+    Johanna.at({3, :am}, {Todonime.Task.Anime.Pull, :run, []})
   end
 end
